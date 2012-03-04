@@ -1,20 +1,9 @@
 <html>
 
 <head>
-<title>mini3D</title>
-<link rel="stylesheet" type="text/css" href="/css/luc.css" />
+<title>gllimpx</title>
 
-<script type="text/javascript" src="matrix.js"></script>
-<script type="text/javascript" src="vector.js"></script>
-<script type="text/javascript" src="matrix3D.js"></script>
-<script type="text/javascript" src="vector3D.js"></script>
-<script type="text/javascript" src="mesh.js"></script>
-<script type="text/javascript" src="object3D.js"></script>
-<script type="text/javascript" src="box.js"></script>
-<script type="text/javascript" src="polySphere.js"></script>
-<script type="text/javascript" src="polyCylinder.js"></script>
-<script type="text/javascript" src="polyCone.js"></script>
-<script type="text/javascript" src="x3d.js"></script>
+<script type="text/javascript" src="gllimpx.js"></script>
 
 <script type="text/javascript">
 
@@ -56,7 +45,7 @@ function doAjaxQuery(method, url) {
 			model = xxx.getScene(xmlDoc);
 			scene = new Object3D();
 			scene.addChild(model);
-			scene.reset(0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+			scene.reset(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 			scene.update(canvas.width / 2,canvas.width,canvas.height);
 			scene.paint(gc);
 		}
@@ -65,13 +54,10 @@ function doAjaxQuery(method, url) {
   xmlhttp.send();
 }
 
-function initScene() {
+function initScene(getUrl) {
 	outLog = document.getElementById("outLog");
 	canvas = document.getElementById("outputCanvas");
 	gc = canvas.getContext("2d");
-
-	var getUrl = "/x3d/xyz.x3d";
-	outLog.innerHTML = "<b>Loading </b>" + getUrl + "<br>";
 	doAjaxQuery("GET", getUrl);
 }
 
@@ -79,9 +65,9 @@ function initScene() {
 </head>
 
 
-<body onLoad="initScene()">
+<body>
 
-<center><h1>mini3D on HTML5 canvas</h1></center>
+<center><h1>gllimpx</h1></center>
 
 <hr/>
 
@@ -96,6 +82,10 @@ function initScene() {
 </center>
 
 <hr/>
-<div id="outLog"></div>
+<form>
+  <input type="button" value="Load" onClick="initScene(modelUrl.value)"/>
+  <input type="text" name="modelUrl"/>
+</form>
+
 </body>
 </html>

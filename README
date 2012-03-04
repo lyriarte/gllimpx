@@ -1,6 +1,17 @@
-==== JavaScript3D ====
+==== gllimpx ====
 
-Mini 3D JavaScript engine on HTML5 canvas
+gllimpx is a Gl-Less IMPlementation of X3d. Or a Gl-less Implementation of a Minimal Part of X3d.
 
-  * License: BSD <http://www.opensource.org/licenses/bsd-license.php>
+Or a goofy acronym for a Javascript library that draws a wireframe view x3d model on the HTML5 canvas,
+so that a user can catch a **glimpse** of a x3d model online, without an actual x3d renderer program.
 
+=== License ===
+
+  * http://www.opensource.org/licenses/bsd-license.php
+
+=== Supported tags ===
+
+  * DEF / USE
+  * Transfom: translation, rotation, scale
+  * Appearance.Material.diffuseColor
+  * Shape: Sphere, Cylinder, Cone, Box
