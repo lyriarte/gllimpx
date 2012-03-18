@@ -8,7 +8,8 @@ SOURCES = 	matrix.js \
 			polyCone.js \
 			polyCylinder.js \
 			polySphere.js \
-			x3d.js
+			x3d.js \
+			gllimpxPrototype.js
 
 gllimpx.js: $(SOURCES)
 	cat $(SOURCES) > gllimpx.js
