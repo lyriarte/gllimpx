@@ -11,13 +11,15 @@ function gllimpx()
 	this.x3d = new x3d();
 	this.canvas = null;
 	this.gc = null;
+	this.model = null;
 	return this;	
 }
 
 gllimpx.prototype.parseX3d = function(x3dStr) {
 	var parser = new DOMParser();
 	var xmlDoc = parser.parseFromString(x3dStr, "text/xml");
-	return this.x3d.getScene(xmlDoc);
+	this.model = this.x3d.getScene(xmlDoc);
+	return this.model;
 }
 
 gllimpx.prototype.setCanvas = function(aCanvas) {
