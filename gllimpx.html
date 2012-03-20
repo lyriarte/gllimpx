@@ -13,7 +13,7 @@ function doAjaxQuery(method, url) {
   var xmlhttp=new XMLHttpRequest();
   xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			gll.model = gll.parseX3d(xmlhttp.responseText);
+			gll.parseX3d(xmlhttp.responseText);
 			gll.setCanvas(document.getElementById("outputCanvas"));
 			gll.redrawCanvas();
 		}
