@@ -198,6 +198,11 @@ x3d.prototype.getTranslationMatrix = function(x, y, z) {
 	return m3d;
 }
 
+x3d.prototype.translation = function(obj, x, y, z) {
+	obj.transformation = obj.transformation.mul(this.getTranslationMatrix(x, y, z));
+	return obj;
+}
+
 
 x3d.prototype.getRotation = function(tosplit) {
 	var xyza = tosplit.match(/\S+/g);
@@ -219,6 +224,11 @@ x3d.prototype.getRotationMatrix = function(fx, fy, fz, teta) {
 	return m3d;
 }
 
+x3d.prototype.rotation = function(obj, fx, fy, fz, teta) {
+	obj.transformation = obj.transformation.mul(this.getRotationMatrix(fx, fy, fz, teta));
+	return obj;
+}
+
 
 x3d.prototype.getScale = function(tosplit) {
 	var xyz = tosplit.match(/\S+/g);
@@ -228,6 +238,11 @@ x3d.prototype.getScale = function(tosplit) {
 x3d.prototype.getScaleMatrix = function(x, y, z) {
 	var m3d = Matrix3D.scale(x, y, -z);
 	return m3d;
+}
+
+x3d.prototype.scale = function(obj, x, y, z) {
+	obj.transformation = obj.transformation.mul(this.getScaleMatrix(x, y, z));
+	return obj;
 }
 
 
