@@ -187,9 +187,14 @@ x3d.prototype.getBox = function(aNode) {
 	return new Box(x,y,z,1);
 }
 
+
 x3d.prototype.getTranslation = function(tosplit) {
 	var xyz = tosplit.match(/\S+/g);
-	var m3d = Matrix3D.translation(parseFloat(xyz[0]),parseFloat(xyz[1]),-parseFloat(xyz[2]));
+	return this.getTranslationMatrix(parseFloat(xyz[0]),parseFloat(xyz[1]),parseFloat(xyz[2]));
+}
+
+x3d.prototype.getTranslationMatrix = function(x, y, z) {
+	var m3d = Matrix3D.translation(x, y, -z);
 	return m3d;
 }
 
@@ -198,22 +203,30 @@ x3d.prototype.getRotation = function(tosplit) {
 	var xyza = tosplit.match(/\S+/g);
 	var fx = parseFloat(xyza[0]);
 	var fy = parseFloat(xyza[1]);
-	var fz =-parseFloat(xyza[2]);
+	var fz = parseFloat(xyza[2]);
 	var teta = parseFloat(xyza[3]);
+	return this.getRotationMatrix(fx, fy, fz, teta);
+}
+
+x3d.prototype.getRotationMatrix = function(fx, fy, fz, teta) {
 	var m3d = new Matrix3D();	
 	if (fx != 0)
 		m3d = m3d.mul(Matrix3D.rotationX(teta * fx));
 	if (fy != 0)
 		m3d = m3d.mul(Matrix3D.rotationY(teta * fy));
 	if (fz != 0)
-		m3d = m3d.mul(Matrix3D.rotationZ(teta * fz));
+		m3d = m3d.mul(Matrix3D.rotationZ(teta * -fz));
 	return m3d;
 }
 
 
 x3d.prototype.getScale = function(tosplit) {
 	var xyz = tosplit.match(/\S+/g);
-	var m3d = Matrix3D.scale(parseFloat(xyz[0]),parseFloat(xyz[1]),-parseFloat(xyz[2]));
+	return this.getScaleMatrix(parseFloat(xyz[0]),parseFloat(xyz[1]),parseFloat(xyz[2]));
+}
+
+x3d.prototype.getScaleMatrix = function(x, y, z) {
+	var m3d = Matrix3D.scale(x, y, -z);
 	return m3d;
 }
 
