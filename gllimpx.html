@@ -9,36 +9,25 @@
 
 var gll = new gllimpx();
 
-function doAjaxQuery(method, url) {
-  var xmlhttp=new XMLHttpRequest();
-  xmlhttp.onreadystatechange=function() {
-		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			gll.parseX3d(xmlhttp.responseText);
-			gll.setCanvas(document.getElementById("outputCanvas"));
-			gll.redrawCanvas();
-		}
-	}
-  xmlhttp.open(method, url, true);
-  xmlhttp.send();
-}
-
-function initScene(getUrl) {
-	doAjaxQuery("GET", getUrl);
+function initScene(text) {
+	gll.parseX3d(text);
+	gll.setCanvas(document.getElementById("outputCanvas"));
+	gll.redrawCanvas();
 }
 
 </script>
 </head>
 
 
-<body>
+<body onload="initScene(controlForm.modelText.value)">
 
 <center><h1>gllimpx</h1></center>
 
 <hr/>
 
 <center>
-<canvas id="outputCanvas" width="480" height="320" 
-  onmousedown="gll.onMouseDown(event)"
+<canvas id="outputCanvas" style="width:640px;height:480px;border-style:solid;border-width:1px"
+onmousedown="gll.onMouseDown(event)"
   onmousemove="gll.rotateOnMouseMove(event)"
   onmouseup="gll.onMouseUp(event)"
   onmouseout="gll.onMouseUp(event)"
@@ -47,9 +36,66 @@ function initScene(getUrl) {
 </center>
 
 <hr/>
-<form>
-  <input type="button" value="Load" onClick="initScene(modelUrl.value)"/>
-  <input type="text" name="modelUrl"/>
+<form name="controlForm">
+ <input type="button" value="Load" onClick="initScene(modelText.value)"/>
+ <textarea name="modelText" rows="40" cols="120">
+	<X3D profile='Immersive' version='3.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'>
+		<Scene>
+			<Transform>
+				<Transform>
+					<Transform>
+						<Shape>
+							<Appearance DEF="Gris">
+								<Material diffuseColor="0.7 0.7 0.7"/>
+							</Appearance>
+							<Cylinder radius="0.1" height="1.0"/>
+						</Shape>
+					</Transform>
+					<Transform translation="0.0 0.6 0.0">
+						<Shape>
+							<Appearance DEF="Vert">
+								<Material diffuseColor="0.6 1.0 0.6"/>
+							</Appearance>
+							<Cone height="0.2" bottomRadius="0.2"/>
+						</Shape>
+					</Transform>
+				</Transform>
+				<Transform rotation="0.0 0.0 1.0 -1.57">
+					<Transform>
+						<Shape>
+							<Appearance USE="Gris"/>
+							<Cylinder radius="0.1" height="1.0"/>
+						</Shape>
+					</Transform>
+					<Transform translation="0.0 0.6 0.0">
+						<Shape>
+							<Appearance DEF="Rouge">
+								<Material diffuseColor="1.0 0.6 0.6"/>
+							</Appearance>
+							<Cone height="0.2" bottomRadius="0.2"/>
+						</Shape>
+					</Transform>
+				</Transform>
+				<Transform rotation="1.0 0.0 0.0 1.57">
+					<Transform>
+						<Shape>
+							<Appearance USE="Gris"/>
+							<Cylinder radius="0.1" height="1.0"/>
+						</Shape>
+					</Transform>
+					<Transform translation="0.0 0.6 0.0">
+						<Shape>
+							<Appearance DEF="Bleu">
+								<Material diffuseColor="0.6 0.6 1.0"/>
+							</Appearance>
+							<Cone height="0.2" bottomRadius="0.2"/>
+						</Shape>
+					</Transform>
+				</Transform>
+			</Transform>
+		</Scene>
+	</X3D>
+ </textarea>
 </form>
 
 </body>
