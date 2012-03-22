@@ -247,6 +247,11 @@ x3d.prototype.scale = function(obj, x, y, z) {
 	return obj;
 }
 
+x3d.prototype.color = function(obj, r, g, b) {
+	obj.color = this.getColorString(r, g, b);
+	return obj;
+}
+
 
 x3d.prototype.getScene = function(xmlDoc) {
 	this.xmlDoc = xmlDoc;
