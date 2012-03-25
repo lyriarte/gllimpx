@@ -73,25 +73,27 @@ x3d.prototype.getObject3D = function(aTransformGroup) {
 	return obj;
 }
 
+
+x3d.prototype.getColorString = function(fr, fg, fb) {
+	var r = (Math.round(255*fr)).toString(16);
+	if (r.length < 2) r = "0" + r;
+	var g = (Math.round(255*fg)).toString(16);
+	if (g.length < 2) g = "0" + g;
+	var b = (Math.round(255*fb)).toString(16);
+	if (b.length < 2) b = "0" + b;
+	return "#" + r + g + b;
+}
 	
 x3d.prototype.getColor = function(aAppearance) {
 	this.defKey(aAppearance);
 	aAppearance = this.useKey(aAppearance);
-	var color = null;
 	var child = aAppearance.firstChild;
 	while(child) {
 		if (child.tagName == "Material") {
 			for (var iatt=0; iatt < child.attributes.length; iatt++) {
 				if (child.attributes.item(iatt).name == "diffuseColor") {
 					var rgb = child.attributes.item(iatt).value.match(/\S+/g);
-					var r = (Math.round(255*parseFloat(rgb[0]))).toString(16);
-					if (r.length < 2) r = "0" + r;
-					var g = (Math.round(255*parseFloat(rgb[1]))).toString(16);
-					if (g.length < 2) g = "0" + g;
-					var b = (Math.round(255*parseFloat(rgb[2]))).toString(16);
-					if (b.length < 2) b = "0" + b;
-					color = "#" + r + g + b;
-					return color;
+					return this.getColorString(parseFloat(rgb[0]),parseFloat(rgb[1]),parseFloat(rgb[2]));
 				}
 			}
 		}
@@ -242,6 +244,11 @@ x3d.prototype.getScaleMatrix = function(x, y, z) {
 
 x3d.prototype.scale = function(obj, x, y, z) {
 	obj.transformation = obj.transformation.mul(this.getScaleMatrix(x, y, z));
+	return obj;
+}
+
+x3d.prototype.color = function(obj, r, g, b) {
+	obj.color = this.getColorString(r, g, b);
 	return obj;
 }
 
