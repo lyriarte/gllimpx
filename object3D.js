@@ -55,7 +55,18 @@ Object3D.prototype.reset = function(trnX, trnY, trnZ, trn0X, trn0Y, trn0Z,
 Object3D.prototype.resetScale = function(scaleX, scaleY, scaleZ) 
 {
 	if (scaleX != 1 || scaleY != 1 || scaleZ != 1)
-		this.mesh.transformThis(Matrix3D.scale(scaleX, scaleY, scaleZ));
+		this.setScale(Matrix3D.scale(scaleX, scaleY, scaleZ));
+	return this;
+};
+
+Object3D.prototype.setScale = function(s) 
+{
+	this.mesh.transformThis(s);
+		for (var i = 0; i < this.nChild; i++) {
+			this.child[i].position = this.child[i].position.mul(s);
+			this.child[i].setScale(s);
+		}
+	}
 	return this;
 };
 
