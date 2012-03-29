@@ -67,7 +67,7 @@ x3d.prototype.getObject3D = function(aTransformGroup) {
 		child = child.nextSibling;
 	}
 	if (scale)
-		obj.transformMeshes(scale);
+		obj.setScale(scale);
 	if (objName)
 		obj.name = objName;
 	return obj;
