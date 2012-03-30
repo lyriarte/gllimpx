@@ -62,10 +62,12 @@ Object3D.prototype.resetScale = function(scaleX, scaleY, scaleZ)
 Object3D.prototype.setScale = function(s) 
 {
 	this.transformMesh(s);
-		for (var i = 0; i < this.nChild; i++) {
-			this.child[i].position = this.child[i].position.mul(s);
-			this.child[i].setScale(s);
-		}
+	for (var i = 0; i < this.nChild; i++) {
+		var transScale = s.mul(this.child[i].position);
+		for (var j = 0; j < 4; j++)
+			transScale.cell[j][j] = 1;
+		this.child[i].setPosition(transScale);
+		this.child[i].setScale(s);
 	}
 	return this;
 };
