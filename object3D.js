@@ -13,6 +13,7 @@ function Object3D()
 	this.mesh = new Mesh(0,0,null,null);
 	this.position = new Matrix3D();
 	this.orientation = new Matrix3D();
+	this.scale = new Matrix3D();
 	this.transformation = new Matrix3D();
 	this.updatedTransform = null;
 	
@@ -25,57 +26,18 @@ function Object3D()
 	return this;
 };
 
-Object3D.prototype.reset = function(trnX, trnY, trnZ, trn0X, trn0Y, trn0Z,
-		rotX, rotY, rotZ, rot0X, rot0Y, rot0Z) 
-{
-	if (rot0X)
-		this.mesh = this.mesh.transform(Matrix3D.rotationX(rot0X));
-	if (rot0Y)
-		this.mesh = this.mesh.transform(Matrix3D.rotationY(rot0Y));
-	if (rot0Z)
-		this.mesh = this.mesh.transform(Matrix3D.rotationZ(rot0Z));
-	if (trn0X || trn0Y || trn0Z)
-		this.mesh = this.mesh.transform(Matrix3D.translation(trn0X, trn0Y, trn0Z));
-	if (rotX)
-		this.orientation = this.orientation.mul(Matrix3D.rotationX(rotX));
-	if (rotY)
-		this.orientation = this.orientation.mul(Matrix3D.rotationY(rotY));
-	if (rotZ)
-		this.orientation = this.orientation.mul(Matrix3D.rotationZ(rotZ));
-	if (trnX || trnY || trnZ)
-		this.position = this.position.mul(Matrix3D.translation(trnX, trnY, trnZ));
-	this.transformation = this.position.mul(this.orientation);
-	this.updatedTransform = null;
-	for (var i = 0; i < this.nChild; i++) {
-		this.child[i].reset();
-	}
-	return this;
-};
-
-Object3D.prototype.resetScale = function(scaleX, scaleY, scaleZ) 
-{
-	if (scaleX != 1 || scaleY != 1 || scaleZ != 1)
-		this.setScale(Matrix3D.scale(scaleX, scaleY, scaleZ));
-	return this;
-};
-
 Object3D.prototype.setScale = function(s) 
 {
-	this.transformMesh(s);
-	for (var i = 0; i < this.nChild; i++) {
-		var transScale = s.mul(this.child[i].position);
-		for (var j = 0; j < 4; j++)
-			transScale.cell[j][j] = 1;
-		this.child[i].setPosition(transScale);
-		this.child[i].setScale(s);
-	}
+	this.scale = s;
+	this.transformation = this.position.mul(this.orientation).mul(this.scale);
+	this.updatedTransform = null;
 	return this;
 };
 
 Object3D.prototype.setOrientation = function(o) 
 {
 	this.orientation = o;
-	this.transformation = this.position.mul(this.orientation);
+	this.transformation = this.position.mul(this.orientation).mul(this.scale);
 	this.updatedTransform = null;
 	return this;
 };
@@ -83,7 +45,7 @@ Object3D.prototype.setOrientation = function(o)
 Object3D.prototype.setPosition = function(p) 
 {
 	this.position = p;
-	this.transformation = this.position.mul(this.orientation);
+	this.transformation = this.position.mul(this.orientation).mul(this.scale);
 	this.updatedTransform = null;
 	return this;
 };
@@ -92,22 +54,6 @@ Object3D.prototype.transform = function(trans)
 {
 	this.transformation = this.transformation.mul(trans);
 	this.updatedTransform = null;
-	return this;
-};
-
-Object3D.prototype.transformMesh = function(trans) 
-{
-	this.mesh.transformThis(trans);
-	return this;
-};
-
-Object3D.prototype.transformMeshes = function(trans) 
-{
-    var i;
-    this.transformMesh(trans);
-	for (i = 0; i < this.nChild; i++) {
-		this.child[i].transformMeshes(trans);
-	}
 	return this;
 };
 
