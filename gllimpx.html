@@ -9,10 +9,28 @@
 
 var gll = new gllimpx();
 
+var outputCanvas, dragAction;
+
 function initScene(text) {
+	outputCanvas = document.getElementById("outputCanvas");
+	dragAction = document.getElementById("dragAction");
 	gll.parseX3d(text);
-	gll.setCanvas(document.getElementById("outputCanvas"));
+	gll.setCanvas(outputCanvas);
 	gll.redrawCanvas();
+}
+
+function canvasOnMouseMove(event) {
+	switch (dragAction.selectedIndex) {
+	case 0:
+		gll.rotateOnMouseMove(event);
+		break;
+	case 1:
+		gll.translateOnMouseMove(event);
+		break;
+	case 2:
+		gll.zoomOnMouseMove(event);
+		break;
+	}
 }
 
 </script>
@@ -28,7 +46,7 @@ function initScene(text) {
 <center>
 <canvas id="outputCanvas" style="width:640px;height:480px;border-style:solid;border-width:1px"
 onmousedown="gll.onMouseDown(event)"
-  onmousemove="gll.rotateOnMouseMove(event)"
+  onmousemove="canvasOnMouseMove(event)"
   onmouseup="gll.onMouseUp(event)"
   onmouseout="gll.onMouseUp(event)"
   >
@@ -37,6 +55,17 @@ onmousedown="gll.onMouseDown(event)"
 
 <hr/>
 <form name="controlForm">
+ <select id="dragAction">
+	 <option>
+	 Rotate
+	 </option>
+	 <option>
+	 Translate
+	 </option>
+	 <option>
+	 Zoom
+	 </option>
+ </select>
  <input type="button" value="Load" onClick="initScene(modelText.value)"/>
  <textarea name="modelText" rows="40" cols="120">
 	<X3D profile='Immersive' version='3.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'>
