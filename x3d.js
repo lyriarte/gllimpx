@@ -51,13 +51,13 @@ x3d.prototype.getObject3D = function(aTransformGroup) {
 	var scale = null;
 	for (var iatt=0; iatt < aTransformGroup.attributes.length; iatt++) {
 		if (aTransformGroup.attributes.item(iatt).name == "translation") {
-			obj.setPosition(this.getTranslation(aTransformGroup.attributes.item(iatt).value));
+			obj.setPosition(x3d.getTranslation(aTransformGroup.attributes.item(iatt).value));
 		}
 		else if (aTransformGroup.attributes.item(iatt).name == "rotation") {
-			obj.setOrientation(this.getRotation(aTransformGroup.attributes.item(iatt).value));
+			obj.setOrientation(x3d.getRotation(aTransformGroup.attributes.item(iatt).value));
 		}
 		else if (aTransformGroup.attributes.item(iatt).name == "scale") {
-			scale = this.getScale(aTransformGroup.attributes.item(iatt).value);
+			scale = x3d.getScale(aTransformGroup.attributes.item(iatt).value);
 		}
 	}
 	child = aTransformGroup.firstChild;
@@ -74,7 +74,7 @@ x3d.prototype.getObject3D = function(aTransformGroup) {
 }
 
 
-x3d.prototype.getColorString = function(fr, fg, fb) {
+x3d.getColorString = function(fr, fg, fb) {
 	var r = (Math.round(255*fr)).toString(16);
 	if (r.length < 2) r = "0" + r;
 	var g = (Math.round(255*fg)).toString(16);
@@ -93,7 +93,7 @@ x3d.prototype.getColor = function(aAppearance) {
 			for (var iatt=0; iatt < child.attributes.length; iatt++) {
 				if (child.attributes.item(iatt).name == "diffuseColor") {
 					var rgb = child.attributes.item(iatt).value.match(/\S+/g);
-					return this.getColorString(parseFloat(rgb[0]),parseFloat(rgb[1]),parseFloat(rgb[2]));
+					return x3d.getColorString(parseFloat(rgb[0]),parseFloat(rgb[1]),parseFloat(rgb[2]));
 				}
 			}
 		}
@@ -190,32 +190,32 @@ x3d.prototype.getBox = function(aNode) {
 }
 
 
-x3d.prototype.getTranslation = function(tosplit) {
+x3d.getTranslation = function(tosplit) {
 	var xyz = tosplit.match(/\S+/g);
-	return this.getTranslationMatrix(parseFloat(xyz[0]),parseFloat(xyz[1]),parseFloat(xyz[2]));
+	return x3d.getTranslationMatrix(parseFloat(xyz[0]),parseFloat(xyz[1]),parseFloat(xyz[2]));
 }
 
-x3d.prototype.getTranslationMatrix = function(x, y, z) {
+x3d.getTranslationMatrix = function(x, y, z) {
 	var m3d = Matrix3D.translation(x, y, -z);
 	return m3d;
 }
 
 x3d.prototype.translation = function(obj, x, y, z) {
-	obj.transformation = obj.transformation.mul(this.getTranslationMatrix(x, y, z));
+	obj.transformation = obj.transformation.mul(x3d.getTranslationMatrix(x, y, z));
 	return obj;
 }
 
 
-x3d.prototype.getRotation = function(tosplit) {
+x3d.getRotation = function(tosplit) {
 	var xyza = tosplit.match(/\S+/g);
 	var fx = parseFloat(xyza[0]);
 	var fy = parseFloat(xyza[1]);
 	var fz = parseFloat(xyza[2]);
 	var teta = parseFloat(xyza[3]);
-	return this.getRotationMatrix(fx, fy, fz, teta);
+	return x3d.getRotationMatrix(fx, fy, fz, teta);
 }
 
-x3d.prototype.getRotationMatrix = function(fx, fy, fz, teta) {
+x3d.getRotationMatrix = function(fx, fy, fz, teta) {
 	var m3d = new Matrix3D();	
 	if (fx != 0)
 		m3d = m3d.mul(Matrix3D.rotationX(teta * fx));
@@ -227,28 +227,28 @@ x3d.prototype.getRotationMatrix = function(fx, fy, fz, teta) {
 }
 
 x3d.prototype.rotation = function(obj, fx, fy, fz, teta) {
-	obj.transformation = obj.transformation.mul(this.getRotationMatrix(fx, fy, fz, teta));
+	obj.transformation = obj.transformation.mul(x3d.getRotationMatrix(fx, fy, fz, teta));
 	return obj;
 }
 
 
-x3d.prototype.getScale = function(tosplit) {
+x3d.getScale = function(tosplit) {
 	var xyz = tosplit.match(/\S+/g);
-	return this.getScaleMatrix(parseFloat(xyz[0]),parseFloat(xyz[1]),parseFloat(xyz[2]));
+	return x3d.getScaleMatrix(parseFloat(xyz[0]),parseFloat(xyz[1]),parseFloat(xyz[2]));
 }
 
-x3d.prototype.getScaleMatrix = function(x, y, z) {
+x3d.getScaleMatrix = function(x, y, z) {
 	var m3d = Matrix3D.scale(x, y, -z);
 	return m3d;
 }
 
 x3d.prototype.scale = function(obj, x, y, z) {
-	obj.transformation = obj.transformation.mul(this.getScaleMatrix(x, y, z));
+	obj.transformation = obj.transformation.mul(x3d.getScaleMatrix(x, y, z));
 	return obj;
 }
 
 x3d.prototype.color = function(obj, r, g, b) {
-	obj.color = this.getColorString(r, g, b);
+	obj.color = x3d.getColorString(r, g, b);
 	return obj;
 }
 
