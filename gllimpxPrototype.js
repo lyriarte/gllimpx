@@ -12,6 +12,8 @@ function gllimpx()
 	this.canvas = null;
 	this.gc = null;
 	this.model = null;
+	this.dragX = 0;
+	this.dragY = 0;
 	return this;	
 }
 
@@ -44,12 +46,33 @@ gllimpx.prototype.onMouseUp = function(event) {
 }
 
 gllimpx.prototype.rotateOnMouseMove = function(event) {
-  if (this.x3d.scene && this.model && this.dragX && this.dragY) {
+  if (this.x3d.scene && this.model && (this.dragX || this.dragY)) {
 	var deltaX = (event.clientX - this.dragX) * 2 * Math.PI / this.canvas.width;
 	var deltaY = (this.dragY - event.clientY) * 2 * Math.PI / this.canvas.height;
 	this.model.transformation = this.model.transformation.mul(
 		Matrix3D.rotationY(deltaX).mul(
 			Matrix3D.rotationX(deltaY)));
+	this.redrawCanvas();
+	this.dragX = event.clientX;
+	this.dragY = event.clientY;
+  }
+}
+
+gllimpx.prototype.translateOnMouseMove = function(event) {
+  if (this.x3d.scene && this.model && (this.dragX || this.dragY)) {
+	var deltaX = (event.clientX - this.dragX) / this.canvas.width;
+	var deltaY = (this.dragY - event.clientY) / this.canvas.height;
+	this.x3d.translation(this.model, deltaX, deltaY, 0);
+	this.redrawCanvas();
+	this.dragX = event.clientX;
+	this.dragY = event.clientY;
+  }
+}
+
+gllimpx.prototype.zoomOnMouseMove = function(event) {
+  if (this.x3d.scene && this.model && this.dragY) {
+	var deltaZ = (this.dragY - event.clientY) / this.canvas.height;
+	this.x3d.translation(this.model, 0, 0, deltaZ);
 	this.redrawCanvas();
 	this.dragX = event.clientX;
 	this.dragY = event.clientY;
