@@ -6,6 +6,13 @@
  * 
  */
 
+
+function x3dNode(object3D) {
+	this.object3D = object3D;
+	return this;
+}
+
+
 function x3d() {
 	this.xmlDoc = null;
 	this.scene = null;
@@ -200,9 +207,9 @@ x3d.getTranslationMatrix = function(x, y, z) {
 	return m3d;
 }
 
-x3d.prototype.translation = function(obj, x, y, z) {
-	obj.transformation = obj.transformation.mul(x3d.getTranslationMatrix(x, y, z));
-	return obj;
+x3dNode.prototype.translation = function(x, y, z) {
+	this.object3D.transformation = this.object3D.transformation.mul(x3d.getTranslationMatrix(x, y, z));
+	return this;
 }
 
 
@@ -226,9 +233,9 @@ x3d.getRotationMatrix = function(fx, fy, fz, teta) {
 	return m3d;
 }
 
-x3d.prototype.rotation = function(obj, fx, fy, fz, teta) {
-	obj.transformation = obj.transformation.mul(x3d.getRotationMatrix(fx, fy, fz, teta));
-	return obj;
+x3dNode.prototype.rotation = function(fx, fy, fz, teta) {
+	this.object3D.transformation = this.object3D.transformation.mul(x3d.getRotationMatrix(fx, fy, fz, teta));
+	return this;
 }
 
 
@@ -242,14 +249,14 @@ x3d.getScaleMatrix = function(x, y, z) {
 	return m3d;
 }
 
-x3d.prototype.scale = function(obj, x, y, z) {
-	obj.transformation = obj.transformation.mul(x3d.getScaleMatrix(x, y, z));
-	return obj;
+x3dNode.prototype.scale = function(x, y, z) {
+	this.object3D.transformation = this.object3D.transformation.mul(x3d.getScaleMatrix(x, y, z));
+	return this;
 }
 
-x3d.prototype.color = function(obj, r, g, b) {
-	obj.color = x3d.getColorString(r, g, b);
-	return obj;
+x3dNode.prototype.color = function(r, g, b) {
+	this.object3D.color = x3d.getColorString(r, g, b);
+	return this;
 }
 
 
@@ -262,7 +269,7 @@ x3d.prototype.getScene = function(xmlDoc) {
 			this.getColor(child);
 		child = child.nextSibling;
 	}
-	this.scene = this.getObject3D(jScene);
+	this.scene = new x3dNode(this.getObject3D(jScene));
 	return this.scene;
 }
 
@@ -281,11 +288,11 @@ x3d.prototype.findObjectChildByName = function(defName, rootObj) {
 
 
 x3d.prototype.findObjectByPath = function(defPath) {
-	var obj = this.scene;
+	var obj = this.scene.object3D;
 	for (var i=0; i<defPath.length; i++) {
 		obj = this.findObjectChildByName(defPath[i],obj);
 		if (!obj)
 			return null;
 	}
-	return obj;
+	return new x3dNode(obj);
 }
