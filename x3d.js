@@ -106,7 +106,7 @@ x3d.prototype.getColor = function(aAppearance) {
 		}
 		child = child.nextSibling;
 	}
-	return color;
+	return null;
 }
 
 
