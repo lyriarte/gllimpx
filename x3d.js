@@ -17,6 +17,7 @@ function x3d() {
 	this.xmlDoc = null;
 	this.scene = null;
 	this.defNodes = new Array();
+	this.circlelines = 6;
 	return this;
 }
 
@@ -154,7 +155,7 @@ x3d.prototype.getCone = function(aNode) {
 			r=parseFloat(aNode.attributes.item(iatt).value);
 		}
 	}
-	return new PolyCone(6,6,h,r);
+	return new PolyCone(this.circlelines,this.circlelines,h,r);
 }
 
 x3d.prototype.getCylinder = function(aNode) {
@@ -168,7 +169,7 @@ x3d.prototype.getCylinder = function(aNode) {
 			r=parseFloat(aNode.attributes.item(iatt).value);
 		}
 	}
-	return new PolyCylinder(6,6,h,r);
+	return new PolyCylinder(this.circlelines,this.circlelines,h,r);
 }
 
 x3d.prototype.getSphere = function(aNode) {
@@ -178,7 +179,7 @@ x3d.prototype.getSphere = function(aNode) {
 			r=parseFloat(aNode.attributes.item(iatt).value);
 		}
 	}
-	return new PolySphere(6,6,r,1);
+	return new PolySphere(this.circlelines,this.circlelines,r,1);
 }
 
 x3d.prototype.getBox = function(aNode) {
