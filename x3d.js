@@ -209,7 +209,7 @@ x3d.getTranslationMatrix = function(x, y, z) {
 }
 
 x3dNode.prototype.translation = function(x, y, z) {
-	this.object3D.transformation = this.object3D.transformation.mul(x3d.getTranslationMatrix(x, y, z));
+	this.object3D.transform(x3d.getTranslationMatrix(x, y, z));
 	return this;
 }
 
@@ -235,7 +235,7 @@ x3d.getRotationMatrix = function(fx, fy, fz, teta) {
 }
 
 x3dNode.prototype.rotation = function(fx, fy, fz, teta) {
-	this.object3D.transformation = this.object3D.transformation.mul(x3d.getRotationMatrix(fx, fy, fz, teta));
+	this.object3D.transform(x3d.getRotationMatrix(fx, fy, fz, teta));
 	return this;
 }
 
@@ -251,7 +251,7 @@ x3d.getScaleMatrix = function(x, y, z) {
 }
 
 x3dNode.prototype.scale = function(x, y, z) {
-	this.object3D.transformation = this.object3D.transformation.mul(x3d.getScaleMatrix(x, y, z));
+	this.object3D.transform(x3d.getScaleMatrix(x, y, z));
 	return this;
 }
 

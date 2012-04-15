@@ -49,7 +49,7 @@ gllimpx.prototype.rotateOnMouseMove = function(event) {
   if (this.model && (this.dragX || this.dragY)) {
 	var deltaX = (event.clientX - this.dragX) * 2 * Math.PI / this.canvas.width;
 	var deltaY = (this.dragY - event.clientY) * 2 * Math.PI / this.canvas.height;
-	this.model.object3D.transformation = this.model.object3D.transformation.mul(
+	this.model.object3D.transform(
 		Matrix3D.rotationY(deltaX).mul(
 			Matrix3D.rotationX(deltaY)));
 	this.redrawCanvas();
