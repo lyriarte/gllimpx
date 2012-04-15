@@ -9,7 +9,8 @@ Matrix3D.prototype = new Matrix;
 
 function Matrix3D() {
 	Matrix.call(this,4,4);
-	this.toId();
+	for (var i=0; i<this.nLines; i++)
+		this.cell[i][i] = 1;
 	return this;
 };
 
