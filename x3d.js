@@ -133,6 +133,9 @@ x3d.prototype.getShape = function(aShape) {
 		else if (child.tagName == "Box") {
 			obj = this.getBox(child);
 		}
+		else if (child.tagName == "IndexedFaceSet") {
+			obj = this.getIndexedFaceSet(child);
+		}
 		child = child.nextSibling;
 	}
 	if (!obj)
@@ -195,6 +198,60 @@ x3d.prototype.getBox = function(aNode) {
 		}
 	}
 	return new Box(x,y,z,1);
+}
+
+x3d.prototype.getIndexedFaceSet = function(aNode) {
+	var iatt, i,j,k,l;
+	var obj = new Object3D();
+	var indexStr, indexes, xyzPoints;
+	for (iatt=0; iatt < aNode.attributes.length; iatt++) {
+		if (aNode.attributes.item(iatt).name == "coordIndex") {
+			indexStr = aNode.attributes.item(iatt).value;
+			indexes = indexStr.match(/\S+/g);
+			break;
+		}
+	}
+	var child = aNode.firstChild;
+	while(child) {
+		if (child.tagName == "Coordinate") {
+			for (iatt=0; iatt < child.attributes.length; iatt++) {
+				if (child.attributes.item(iatt).name == "point") {
+					xyzPoints = child.attributes.item(iatt).value.match(/\S+/g);
+					break;
+				}
+			}
+			break;
+		}
+		child = child.nextSibling;
+	}
+	var nPoints = xyzPoints.length/3;
+	var vertex = new Array(nPoints);
+	for (i=0; i<nPoints; i++) {
+	    vertex[i] = new Vector3D(parseFloat(xyzPoints[i*3]),parseFloat(xyzPoints[i*3+1]),parseFloat(xyzPoints[i*3+2]));
+	}
+	i=j=0;
+	while(i != -1) {
+	    i=indexStr.indexOf("-1",i+1);
+	    j++;
+	}
+	var nFaces = j-1;
+	var nEdges = indexes.length-nFaces;
+	var edges = new Array(nEdges);
+	j=k=l=0;
+	for (i=0; i<indexes.length; i++) {
+		if (parseInt(indexes[i]) == -1) {
+			for (k=j; k<i; k++) {
+				edges[l] = new Array(2);
+				edges[l][0]=parseInt(indexes[k]);
+				edges[l][1]=parseInt(indexes[k+1]);
+			    l++;
+			}
+			edges[l-1][1]=parseInt(indexes[j]);
+			j=i+1;
+	    }
+	}
+	obj.mesh = new Mesh(vertex.length,edges.length,vertex,edges);
+	return obj;
 }
 
 
