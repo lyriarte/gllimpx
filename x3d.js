@@ -34,7 +34,8 @@ x3d.prototype.defKey = function(aNode) {
 x3d.prototype.useKey = function(aNode) {
 	for (var iatt=0; iatt < aNode.attributes.length; iatt++) {
 		if (aNode.attributes.item(iatt).name == "USE") {
-			return this.defNodes[aNode.attributes.item(iatt).value];
+			if (this.defNodes[aNode.attributes.item(iatt).value])
+				return this.defNodes[aNode.attributes.item(iatt).value];
 		}
 	}
 	return aNode;
