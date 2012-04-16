@@ -363,8 +363,9 @@ x3d.prototype.getScene = function(xmlDoc) {
 		child = child.nextSibling;
 	}
 	this.scene = new x3dNode(this.getObject3D(jScene));
-	if (this.viewpoints.length)
-		this.setViewpoint(this.viewpoints[0]);
+	if (this.viewpoints.length == 0)
+		this.viewpoints.push(new Object3D().setPosition(Matrix3D.translation(0,0,10)));
+	this.setViewpoint(this.viewpoints[0]);
 	return this.scene;
 }
 
