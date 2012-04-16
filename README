@@ -48,10 +48,12 @@ Named elements of the model (with a DEF tag) are accessible from Javascript and 
 
 == attributes ==
 
+  * scene : a x3DNode object
   * circlelines : number of lines to approximate a circle, set to 6 by default.
 
 == functions ==
 
+  * getScene(xmlDoc) : returns the x3dNode object corresponding to the Scene node of the document.
   * findObjectByPath(defPath) : returns the x3dNode object addressed by an array of nested nodes DEF names.
 
 
