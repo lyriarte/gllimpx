@@ -180,6 +180,7 @@ x3d.prototype.getSphere = function(aNode) {
 	for (var iatt=0; iatt < aNode.attributes.length; iatt++) {
 		if (aNode.attributes.item(iatt).name == "radius") {
 			r=parseFloat(aNode.attributes.item(iatt).value);
+			break;
 		}
 	}
 	return new PolySphere(this.circlelines,this.circlelines,r,1);
@@ -195,6 +196,7 @@ x3d.prototype.getBox = function(aNode) {
 			x=parseFloat(xyz[0]);
 			y=parseFloat(xyz[1]);
 			z=parseFloat(xyz[2]);
+			break;
 		}
 	}
 	return new Box(x,y,z,1);
