@@ -13,7 +13,7 @@ gllimpx  (Gl-Less IMPlementation of X3d) is a Javascript library that draws a x3
   * DEF / USE
   * Transfom: translation, rotation, scale
   * Appearance.Material.diffuseColor
-  * Shape: Sphere, Cylinder, Cone, Box
+  * Shape: Sphere, Cylinder, Cone, Box, IndexedFaceSet
 
 
 
