@@ -17,6 +17,7 @@ function x3d() {
 	this.xmlDoc = null;
 	this.scene = null;
 	this.defNodes = new Array();
+	this.viewpoints = new Array();
 	this.circlelines = 6;
 	return this;
 }
@@ -57,7 +58,6 @@ x3d.prototype.getObject3D = function(aTransformGroup) {
 	}
 	if (!obj)
 		obj = new Object3D();
-	var scale = null;
 	for (var iatt=0; iatt < aTransformGroup.attributes.length; iatt++) {
 		if (aTransformGroup.attributes.item(iatt).name == "translation") {
 			obj.setPosition(x3d.getTranslation(aTransformGroup.attributes.item(iatt).value));
@@ -66,7 +66,7 @@ x3d.prototype.getObject3D = function(aTransformGroup) {
 			obj.setOrientation(x3d.getRotation(aTransformGroup.attributes.item(iatt).value));
 		}
 		else if (aTransformGroup.attributes.item(iatt).name == "scale") {
-			scale = x3d.getScale(aTransformGroup.attributes.item(iatt).value);
+			obj.setScale(x3d.getScale(aTransformGroup.attributes.item(iatt).value));
 		}
 	}
 	child = aTransformGroup.firstChild;
@@ -75,8 +75,6 @@ x3d.prototype.getObject3D = function(aTransformGroup) {
 			obj.addChild(this.getObject3D(child));
 		child = child.nextSibling;
 	}
-	if (scale)
-		obj.setScale(scale);
 	if (objName)
 		obj.name = objName;
 	return obj;
@@ -258,6 +256,11 @@ x3d.prototype.getIndexedFaceSet = function(aNode) {
 }
 
 
+x3d.getPosition = function(tosplit) {
+	var xyz = tosplit.match(/\S+/g);
+	return x3d.getTranslationMatrix(-parseFloat(xyz[0]),-parseFloat(xyz[1]),-parseFloat(xyz[2]));
+}
+
 x3d.getTranslation = function(tosplit) {
 	var xyz = tosplit.match(/\S+/g);
 	return x3d.getTranslationMatrix(parseFloat(xyz[0]),parseFloat(xyz[1]),parseFloat(xyz[2]));
@@ -274,13 +277,14 @@ x3dNode.prototype.translation = function(x, y, z) {
 }
 
 
+x3d.getOrientation = function(tosplit) {
+	var xyza = tosplit.match(/\S+/g);
+	return x3d.getRotationMatrix(parseFloat(xyza[0]), parseFloat(xyza[1]), parseFloat(xyza[2]), -parseFloat(xyza[3]));
+}
+
 x3d.getRotation = function(tosplit) {
 	var xyza = tosplit.match(/\S+/g);
-	var fx = parseFloat(xyza[0]);
-	var fy = parseFloat(xyza[1]);
-	var fz = parseFloat(xyza[2]);
-	var teta = parseFloat(xyza[3]);
-	return x3d.getRotationMatrix(fx, fy, fz, teta);
+	return x3d.getRotationMatrix(parseFloat(xyza[0]), parseFloat(xyza[1]), parseFloat(xyza[2]), parseFloat(xyza[3]));
 }
 
 x3d.getRotationMatrix = function(fx, fy, fz, teta) {
@@ -321,16 +325,46 @@ x3dNode.prototype.color = function(r, g, b) {
 }
 
 
+x3d.prototype.getViewpoint = function(aViewpoint) {
+	var objName = this.defKey(aViewpoint);
+	aViewpoint = this.useKey(aViewpoint);
+	var obj = new Object3D();
+	for (var iatt=0; iatt < aViewpoint.attributes.length; iatt++) {
+		if (aViewpoint.attributes.item(iatt).name == "position") {
+			obj.setPosition(x3d.getPosition(aViewpoint.attributes.item(iatt).value));
+		}
+		else if (aViewpoint.attributes.item(iatt).name == "orientation") {
+			obj.setOrientation(x3d.getOrientation(aViewpoint.attributes.item(iatt).value));
+		}
+	}
+	obj.name = objName;
+	return obj;
+}
+
+x3d.prototype.setViewpoint = function(object3D) {
+	var obj = this.scene.object3D;
+	obj.transformation = obj.position.mul(obj.orientation).mul(obj.scale);
+	obj.transform(object3D.transformation);
+	return this;
+}
+
+
 x3d.prototype.getScene = function(xmlDoc) {
 	this.xmlDoc = xmlDoc;
+	this.defNodes = new Array();
+	this.viewpoints = new Array();
 	var jScene = this.xmlDoc.getElementsByTagName("Scene")[0];
 	var child = jScene.firstChild;
 	while(child) {
 		if (child.tagName == "Appearance")
 			this.getColor(child);
+		else if (child.tagName == "Viewpoint")
+			this.viewpoints.push(this.getViewpoint(child));
 		child = child.nextSibling;
 	}
 	this.scene = new x3dNode(this.getObject3D(jScene));
+	if (this.viewpoints.length)
+		this.setViewpoint(this.viewpoints[0]);
 	return this.scene;
 }
 
