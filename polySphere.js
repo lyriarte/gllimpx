@@ -5,7 +5,8 @@
  * License: BSD <http://www.opensource.org/licenses/bsd-license.php>
  * 
  */
-PolySphere.prototype = new Object3D;
+PolySphere.prototype = new Object3D();
+PolySphere.prototype.constructor = Object3D;
 
 function PolySphere(nTotal, n, r, frad) 
 {

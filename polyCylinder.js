@@ -5,7 +5,8 @@
  * License: BSD <http://www.opensource.org/licenses/bsd-license.php>
  * 
  */
-PolyCylinder.prototype = new Object3D;
+PolyCylinder.prototype = new Object3D();
+PolyCylinder.prototype.constructor = Object3D;
 
 function PolyCylinder(nTotal, n, h, r) 
 {

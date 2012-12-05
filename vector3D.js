@@ -5,7 +5,8 @@
  * License: BSD <http://www.opensource.org/licenses/bsd-license.php>
  * 
  */
-Vector3D.prototype = new Vector;
+Vector3D.prototype = new Vector();
+Vector3D.prototype.constructor = Vector;
 
 function Vector3D(x,y,z) {
 	Vector.call(this,4);

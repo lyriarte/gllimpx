@@ -5,7 +5,8 @@
  * License: BSD <http://www.opensource.org/licenses/bsd-license.php>
  * 
  */
-PolyCone.prototype = new Object3D;
+PolyCone.prototype = new Object3D();
+PolyCone.prototype.constructor = Object3D;
 
 function PolyCone(nTotal, n, h, r)
 {

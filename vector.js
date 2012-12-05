@@ -5,7 +5,8 @@
  * License: BSD <http://www.opensource.org/licenses/bsd-license.php>
  * 
  */
-Vector.prototype = new Matrix;
+Vector.prototype = new Matrix();
+Vector.prototype.constructor = Matrix;
 
 function Vector(l) {
 	Matrix.call(this,l,1);

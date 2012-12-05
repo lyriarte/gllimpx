@@ -5,7 +5,8 @@
  * License: BSD <http://www.opensource.org/licenses/bsd-license.php>
  * 
  */
-Matrix3D.prototype = new Matrix;
+Matrix3D.prototype = new Matrix();
+Matrix3D.prototype.constructor = Matrix;
 
 function Matrix3D() {
 	Matrix.call(this,4,4);

@@ -5,7 +5,8 @@
  * License: BSD <http://www.opensource.org/licenses/bsd-license.php>
  * 
  */
-Box.prototype = new Object3D;
+Box.prototype = new Object3D();
+Box.prototype.constructor = Object3D;
 
 function Box(x, y, z, fx) {
 	Object3D.call(this);
