@@ -50,7 +50,8 @@ Matrix.prototype.mul = function(aMatrix)
  * License: BSD <http://www.opensource.org/licenses/bsd-license.php>
  * 
  */
-Matrix3D.prototype = new Matrix;
+Matrix3D.prototype = new Matrix();
+Matrix3D.prototype.constructor = Matrix;
 
 function Matrix3D() {
 	Matrix.call(this,4,4);
@@ -114,7 +115,8 @@ Matrix3D.rotationZ = function(teta)
  * License: BSD <http://www.opensource.org/licenses/bsd-license.php>
  * 
  */
-Vector.prototype = new Matrix;
+Vector.prototype = new Matrix();
+Vector.prototype.constructor = Matrix;
 
 function Vector(l) {
 	Matrix.call(this,l,1);
@@ -128,7 +130,8 @@ function Vector(l) {
  * License: BSD <http://www.opensource.org/licenses/bsd-license.php>
  * 
  */
-Vector3D.prototype = new Vector;
+Vector3D.prototype = new Vector();
+Vector3D.prototype.constructor = Vector;
 
 function Vector3D(x,y,z) {
 	Vector.call(this,4);
@@ -363,7 +366,8 @@ Mesh.prototype.drawWireframe = function(gc, color)
  * License: BSD <http://www.opensource.org/licenses/bsd-license.php>
  * 
  */
-Box.prototype = new Object3D;
+Box.prototype = new Object3D();
+Box.prototype.constructor = Object3D;
 
 function Box(x, y, z, fx) {
 	Object3D.call(this);
@@ -407,7 +411,8 @@ function Box(x, y, z, fx) {
  * License: BSD <http://www.opensource.org/licenses/bsd-license.php>
  * 
  */
-PolyCone.prototype = new Object3D;
+PolyCone.prototype = new Object3D();
+PolyCone.prototype.constructor = Object3D;
 
 function PolyCone(nTotal, n, h, r)
 {
@@ -444,7 +449,8 @@ function PolyCone(nTotal, n, h, r)
  * License: BSD <http://www.opensource.org/licenses/bsd-license.php>
  * 
  */
-PolyCylinder.prototype = new Object3D;
+PolyCylinder.prototype = new Object3D();
+PolyCylinder.prototype.constructor = Object3D;
 
 function PolyCylinder(nTotal, n, h, r) 
 {
@@ -482,7 +488,8 @@ function PolyCylinder(nTotal, n, h, r)
  * License: BSD <http://www.opensource.org/licenses/bsd-license.php>
  * 
  */
-PolySphere.prototype = new Object3D;
+PolySphere.prototype = new Object3D();
+PolySphere.prototype.constructor = Object3D;
 
 function PolySphere(nTotal, n, r, frad) 
 {
