@@ -771,7 +771,7 @@ x3d.prototype.getIndexedFaceSet = function(aNode) {
 	var nPoints = xyzPoints.length/3;
 	var vertex = new Array(nPoints);
 	for (i=0; i<nPoints; i++) {
-	    vertex[i] = new Vector3D(parseFloat(xyzPoints[i*3]),parseFloat(xyzPoints[i*3+1]),parseFloat(xyzPoints[i*3+2]));
+	    vertex[i] = new Vector3D(parseFloat(xyzPoints[i*3]),parseFloat(xyzPoints[i*3+1]),-parseFloat(xyzPoints[i*3+2]));
 	}
 	i=j=0;
 	while(i != -1) {
