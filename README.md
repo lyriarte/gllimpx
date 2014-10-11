@@ -8,7 +8,7 @@ Example
 -------
 
   * [Live interpreter](http://lyriarte.github.io/gllimpx/) on a 3 axis model.
-
+  * Simple [house model](http://lyriarte.github.io/gllimpx/maison3D.html)
 
 License
 -------
