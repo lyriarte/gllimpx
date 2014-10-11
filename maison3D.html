@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>maison 3D</title>
+
+<script type="text/javascript" src="gllimpx.js"></script>
+
+<script type="text/javascript">
+
+var gll = new gllimpx();
+
+var outputCanvas, dragAction;
+
+function initScene(text) {
+	outputCanvas = document.getElementById("outputCanvas");
+	dragAction = document.getElementById("dragAction");
+	gll.parseX3d(text);
+	gll.model = gll.x3d.findObjectByPath(["MODELE"]);
+	gll.setCanvas(outputCanvas);
+	gll.redrawCanvas();
+}
+
+function canvasOnMouseMove(event) {
+	switch (dragAction.selectedIndex) {
+	case 0:
+		gll.rotateOnMouseMove(event);
+		break;
+	case 1:
+		gll.translateOnMouseMove(event);
+		break;
+	case 2:
+		gll.zoomOnMouseMove(event);
+		break;
+	}
+}
+
+function doAjaxQuery(url) {
+xmlhttp=new XMLHttpRequest();
+	
+	xmlhttp.onreadystatechange=function() {
+	  if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+	    initScene(xmlhttp.responseText);
+	  }
+	}
+	
+	xmlhttp.open("GET", url, true);
+	xmlhttp.send();
+}
+
+</script>
+</head>
+
+
+<body onload="doAjaxQuery('maison.x3d')">
+
+<center><h1>maison</h1></center>
+
+<hr/>
+
+<center>
+<canvas id="outputCanvas" style="width:640px;height:480px;border-style:solid;border-width:1px"
+onmousedown="gll.onMouseDown(event)"
+  onmousemove="canvasOnMouseMove(event)"
+  onmouseup="gll.onMouseUp(event)"
+  onmouseout="gll.onMouseUp(event)"
+  >
+</canvas>
+</center>
+
+<hr/>
+<form name="controlForm">
+ <select id="dragAction">
+	 <option>
+	 Rotate
+	 </option>
+	 <option>
+	 Translate
+	 </option>
+	 <option>
+	 Zoom
+	 </option>
+ </select>
+</form>
+
+</body>
+</html>

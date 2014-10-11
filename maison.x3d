@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN"   "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D profile='Immersive' version='3.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'>
+<Scene>
+<Viewpoint position="-10 4 30"/>
+	<Group DEF="MODELE">
+		<Transform translation="-13.665 -0.05 -13.585">
+			<Shape DEF="TERRAIN">
+				<Appearance DEF="Herbe">
+					<Material diffuseColor="0.6 0.8 0.4"/>
+				</Appearance>
+				<Box size="27.33 0.1 27.17"/>
+			</Shape>
+		</Transform>
+		<Group DEF="MAISON">
+		<Transform DEF="ORIGINEMAISON" translation="-5 0 -5">
+			<Transform translation="-3 0 0">
+				<Transform translation="-4.09 0.3 0.6">
+				<Shape>
+					<Appearance DEF="Gris">
+						<Material diffuseColor="0.6 0.6 0.6"/>
+					</Appearance>
+					<Box size="8.18 0.6 1.2"/>
+				</Shape>
+				</Transform>
+				<Transform translation="-4.09 0.4 1.3">
+				<Shape>
+					<Appearance DEF="Crepi">
+						<Material diffuseColor="0.6 0.6 0.0"/>
+					</Appearance>
+					<Box size="8.18 0.8 0.2"/>
+				</Shape>
+				</Transform>
+			</Transform>
+			<Transform translation="-4.29 0.6 0">
+				<Transform translation="0 1.1 0">
+				<Shape>
+					<Appearance DEF="Marron">
+						<Material diffuseColor="0.6 0.2 0.1"/>
+					</Appearance>
+					<Box size="1 2.2 0.1"/>
+				</Shape>
+				</Transform>
+			</Transform>
+			<Transform translation="-8.58 0 0">
+				<Transform translation="-1.3 0.3 -5.49">
+				<Shape>
+					<Appearance USE="Gris"/>
+					<Box size="2.6 0.6 10.98"/>
+				</Shape>
+				</Transform>
+				<Transform translation="-2.7 0.4 -5.49">
+				<Shape>
+					<Appearance USE="Crepi"/>
+					<Box size="0.2 0.8 10.98"/>
+				</Shape>
+				</Transform>
+			</Transform>
+			<Transform translation="-4.29 0 -5.49">
+				<Transform translation="0 0.3 0">
+				<Shape DEF="VIDESANITAIRE">
+					<Appearance USE="Gris"/>
+					<Box size="8.58 0.6 10.98"/>
+				</Shape>
+				</Transform>
+				<Transform translation="0 1.85 0">
+				<Shape DEF="MURSMAISON">
+					<Appearance USE="Crepi"/>
+					<Box size="8.58 2.5 10.98"/>
+				</Shape>
+				</Transform>
+			</Transform>
+			<Transform translation="0 3.1 0">
+			<Shape DEF="PIGNON">
+				<Appearance USE="Crepi"/>
+				<IndexedFaceSet coordIndex="0 1 2 -1">
+					<Coordinate point="0 0 0 -8.58 0 0 -4.29 1.5 0" />			
+				</IndexedFaceSet>
+			</Shape>
+			<Shape DEF="TOITMAISON">
+				<Appearance DEF="Tuile">
+					<Material diffuseColor="0.6 0.2 0.0"/>
+				</Appearance>
+				<IndexedFaceSet coordIndex="0 3 5 2 -1 1 4 5 2 -1">
+					<Coordinate point="0 0 0 -8.58 0 0 -4.29 1.5 0 0 0 -10.98 -8.58 0 -10.98 -4.29 1.5 -10.98" />			
+				</IndexedFaceSet>
+			</Shape>
+			</Transform>
+		</Transform>
+		</Group>
+		<Group DEF="GARAGE">
+		<Transform DEF="ORIGINEGARAGE" translation="-5 0 -15.98">
+			<Transform translation="-5 -0.05 -2.30">
+				<Shape DEF="DALLEGARAGE">
+					<Appearance USE="Gris" />
+					<Box size="10 0.1 4.60"/>
+				</Shape>
+			</Transform>
+			<Shape DEF="MURSGARAGE">
+				<Appearance USE="Crepi"/>
+				<IndexedFaceSet coordIndex="6 0 3 8 -1 7 2 5 9 -1 0 1 2 7 6 -1 3 4 5 9 8 -1">
+					<Coordinate point="0 3.10 0 -4.29 4.60 0 -10 2.60 0 0 3.10 -4.60 -4.29 4.60 -4.60 -10 2.60 -4.60 0 0 0 -10 0 0 0 0 -4.60 -10 0 -4.60" />
+				</IndexedFaceSet>
+			</Shape>
+			<Transform translation="0 3.1 0">
+			<Shape DEF="TOITGARAGE">
+				<Appearance USE="Tuile"/>
+				<IndexedFaceSet coordIndex="0 3 5 2 -1 1 4 5 2 -1">
+					<Coordinate point="0 0 0 -10 -0.5 0 -4.29 1.5 0 0 0 -4.60 -10 -0.5 -4.60 -4.29 1.5 -4.60" />			
+				</IndexedFaceSet>
+			</Shape>
+			</Transform>
+		</Transform>
+		</Group>
+	</Group>
+</Scene>
+</X3D>
+
