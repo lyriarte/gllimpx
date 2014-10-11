@@ -36,14 +36,14 @@ Named elements of the model (with a DEF tag) are accessible from Javascript and 
 
 ### gllimpx object
 
-## attributes
+#### attributes
 
   * x3d : a x3d object holding the DOM tree for the x3d model.
   * model : a x3DNode object, initially at the scene node. 
   * canvas : a HTML5 canvas to draw the model.
 
 
-## functions
+#### functions
 
   * parseX3d(x3dStr) : creates the x3d DOM tree and the model from a x3d string, returns the model.
   * setCanvas(aCanvas)
@@ -57,19 +57,19 @@ Named elements of the model (with a DEF tag) are accessible from Javascript and 
 
 ### x3d object
 
-## attributes
+#### attributes
 
   * scene : a x3DNode object
   * circlelines : number of lines to approximate a circle, set to 6 by default.
 
-## functions
+#### functions
 
   * getScene(xmlDoc) : returns the x3dNode object corresponding to the Scene node of the document.
   * findObjectByPath(defPath) : returns the x3dNode object addressed by an array of nested nodes DEF names.
 
 ### x3dNode object
 
-## functions
+#### functions
 
   * rotation(fx, fy, fz, teta) : rotates the object as defined by the rotation attribute of a Transform x3d tag.
   * translation(x, y, z) : translates the object as defined by the translation attribute of a Transform x3d tag.
