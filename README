@@ -3,6 +3,10 @@
 gllimpx  (Gl-Less IMPlementation of X3d) is a Javascript library that draws a x3d model on the HTML5 canvas.
 
 
+==== Example ====
+
+  * [Live interpreter](http://lyriarte.github.io/gllimpx/) on a 3 axis model.
+
 ==== License ====
 
   * http://www.opensource.org/licenses/bsd-license.php
